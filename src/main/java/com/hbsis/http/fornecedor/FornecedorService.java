@@ -17,6 +17,8 @@ public class FornecedorService {
         this.iFornecedorRepository = iFornecedorRepository;
     }
 
+
+
     public FornecedorDTO save(FornecedorDTO fornecedorDTO) {
         this.validate(fornecedorDTO);
         LOGGER.info("Saving 'Fornecedor'");
@@ -36,31 +38,25 @@ public class FornecedorService {
     }
 
     private void validate(FornecedorDTO fornecedorDTO) {
-        LOGGER.info("Validationg 'Fornecedor'");
+        LOGGER.info("Validating 'Fornecedor'");
 
         if (fornecedorDTO == null) {
-            throw new IllegalArgumentException("Fornecedor não deve ser nulo");
+            throw new IllegalArgumentException("Fornecedor cannot be Null");
         }
+        if (fornecedorDTO.getCnpj().length() != 14) {
+            long valor = fornecedorDTO.getCnpj().length();
+            throw new IllegalArgumentException(String.format("O número de caracteres permitidos é 14! Você está colocando %s", valor));
+        }
+    }
 
-        //Validação cnpj, se tem 14 caracteres e se são números.
+    public void mask(FornecedorDTO fornecedorDTO) {
         boolean valida = false;
         String forne = String.valueOf(fornecedorDTO.getCnpj());
-        String telefoneN = fornecedorDTO.getTelefone();
         for (int i = 0; i < forne.length(); ++i) {
             char ch = forne.charAt(i);
             if (!(ch >= '0' && ch <= '9')) {
                 valida = true;
             }
-
-        }
-
-        if (valida == true) {
-            throw new IllegalArgumentException("Caracteres não permitidos.");
-        }
-
-        if (forne.length() != 14) {
-            long valor = forne.length();
-            throw new IllegalArgumentException(String.format("O número de caracteres permitidos é 14! Você está colocando %s", valor));
         }
     }
 
