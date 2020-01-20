@@ -10,3 +10,6 @@
 
 Spring Boot 2.2.2 [RELEASE]
 Angular 8 [Started with CLI]
+
+<h5>Followed Tutorial</h5>
+<span>https://grokonez.com/spring-framework/spring-boot/angular-spring-boot-jwt-authentication-example-angular-6-spring-security-mysql-full-stack-part-2-build-backend</span>
