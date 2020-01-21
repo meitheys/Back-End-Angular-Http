@@ -5,6 +5,16 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
+import com.hbsis.http.message.response.JwtResponse;
+import com.hbsis.http.model.User;
+import com.hbsis.http.message.request.LoginForm;
+import com.hbsis.http.message.request.SignUpForm;
+import com.hbsis.http.message.response.ResponseMessage;
+import com.hbsis.http.model.Role;
+import com.hbsis.http.model.RoleName;
+import com.hbsis.http.repository.RoleRepository;
+import com.hbsis.http.repository.UserRepository;
+import com.hbsis.http.security.jwt.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,16 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hbsis.http.message.request.LoginForm;
-import com.hbsis.http.message.request.SignUpForm;
-import com.hbsis.http.message.response.JwtResponse;
-import com.hbsis.http.message.response.ResponseMessage;
-import com.hbsis.http.model.Role;
-import com.hbsis.http.model.RoleName;
-import com.hbsis.http.model.User;
-import com.hbsis.http.repository.RoleRepository;
-import com.hbsis.http.repository.UserRepository;
-import com.hbsis.http.security.jwt.JwtProvider;
+
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -87,17 +88,23 @@ public class AuthRestAPIs {
         strRoles.forEach(role -> {
             switch (role) {
                 case "admin":
-                    Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN).orElseThrow(() -> new RuntimeException("Fail! -> Cause: User(ADM -> ERROR!) Role not find."));
+                    Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN)
+                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: ADMIN Role not find."));
+
+                    System.out.println(adminRole + "That's the AdminRole that is being get from findBy");
+
                     roles.add(adminRole);
 
                     break;
                 case "pm":
-                    Role pmRole = roleRepository.findByName(RoleName.ROLE_PM).orElseThrow(() -> new RuntimeException("Fail! -> Cause: User(PM -> ERROR!) Role not find."));
+                    Role pmRole = roleRepository.findByName(RoleName.ROLE_PM)
+                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: PM Role not find."));
                     roles.add(pmRole);
 
                     break;
                 default:
-                    Role userRole = roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new RuntimeException("Fail! -> Cause: User(Simple User -> ERROR!) Role not find."));
+                    Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
                     roles.add(userRole);
             }
         });

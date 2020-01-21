@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.NaturalId;
 
 @Entity
-@Table(name = "user_auth", uniqueConstraints = {
+@Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "username"
         }),
